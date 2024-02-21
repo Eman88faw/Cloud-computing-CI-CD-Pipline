@@ -1,0 +1,14 @@
+FROM python:3.9-slim-buster
+
+# Update package lists and install packages using apt
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    openssh-client \
+    sshpass && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy requirements file (you need to create this file)
+COPY requirements.txt /tmp/
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r /tmp/requirements.txt

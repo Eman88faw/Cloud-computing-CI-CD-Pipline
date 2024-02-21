@@ -1,0 +1,42 @@
+stages:
+  - test
+  - build_and_deploy
+
+run_tests:
+  stage: test
+  script:
+    - python3 -m venv venv;
+    - . venv/bin/activate;
+    - pytest
+
+build_and_deploy_app:
+  stage: build_and_deploy
+  script:
+    - sshpass -p $PASS ssh -o StrictHostKeyChecking=no projektstudent@10.100.8.142 '
+      if [ -d "dmytromykhailiuk" ];
+        then rm -rf "dmytromykhailiuk";
+        echo "Directory deleted.";
+        git clone git@git.th-wildau.de:wir/cloudcomputing/ws23-24/dmytromykhailiuk.git;
+        cd dmytromykhailiuk;
+        python3 -m venv venv;
+        . venv/bin/activate;
+        pip install -r requirements.txt;
+        export FLASK_APP=app.py;
+        export FLASK_ENV=development;
+        kill $(lsof -t -i:5000);
+        nohup ./gunicorn_starter.sh > output.log 2>&1 &
+      else 
+        echo "Directory does not exist.";
+        git clone git@git.th-wildau.de:wir/cloudcomputing/ws23-24/dmytromykhailiuk.git;
+        cd dmytromykhailiuk;
+        python3 -m venv venv;
+        . venv/bin/activate;
+        pip install -r requirements.txt;
+        export FLASK_APP=app.py;
+        export FLASK_ENV=development;
+        pip install gunicorn;
+        kill $(lsof -t -i:5000);
+        nohup ./gunicorn_starter.sh > output.log 2>&1 &
+        fi'
+  only:
+    - master

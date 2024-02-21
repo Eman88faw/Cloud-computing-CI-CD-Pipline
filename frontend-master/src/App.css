@@ -1,0 +1,59 @@
+.App {
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin: 20px;
+}
+
+.to-do-container {
+  display: inline-block;
+  text-align: left;
+  border: 2px solid #007bff;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+h2 {
+  color: #007bff;
+}
+
+input {
+  padding: 10px;
+  margin-right: 8px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+}
+
+li.done {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+button:focus {
+  outline: none;
+}
